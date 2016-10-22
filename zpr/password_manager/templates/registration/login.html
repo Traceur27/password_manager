@@ -5,6 +5,7 @@
 {% bootstrap_messages %}
 
 {% block content %}
+<h2> Login </h2>
 <form class="form-horizonta" method="post" action="{% url 'login' %}">
 {% csrf_token %}
     {% bootstrap_form form %}
@@ -15,6 +16,7 @@
     {% endbuttons %}
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
+<h3> Don't have account yet ? </h3>
 <button class="btn btn-success" onclick="location.href='/register/'">
     {% bootstrap_icon "plus" %}
     Create Account

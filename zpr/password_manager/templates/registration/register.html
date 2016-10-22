@@ -5,6 +5,7 @@
 {% bootstrap_messages %}
 
 {% block content %}
+<h2> Register </h2>
 <form action="/register/" method="post" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
