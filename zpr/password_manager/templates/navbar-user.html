@@ -1,0 +1,11 @@
+{% extends "navbar-base.html" %}
+
+{% block left%}
+<li class="active"><a>Logged in as {{user}}</a></li>
+{% endblock left%}
+
+{% block right %}
+<li><a href="/me/"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+<li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+{% endblock right %}
+

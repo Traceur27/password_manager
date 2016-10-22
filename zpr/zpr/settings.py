@@ -31,14 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
-    'password_manager'
+    'password_manager',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'pl-PL'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
