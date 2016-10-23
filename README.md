@@ -15,6 +15,7 @@ pip install -r requirements.txt
 
 [Before running server for the first time]
 ```bash
+./manage.py makemigrations
 ./manage.py migrate
 ./manage.py loaddata fixtures/admin.json
 ```
@@ -22,6 +23,13 @@ pip install -r requirements.txt
 [Starting server]
 ```bash
 ./manage.py runserver
+```
+
+## PyCharm setub
+```bash
+Run -> Edit Configurations -> press "+" sign -> red mark "Fix"
+check "Enable Django Support" -> set project root: password_manager/zpr
+set paths for settings.py and manage.py -> Apply
 ```
 
 ## Using admin tools
