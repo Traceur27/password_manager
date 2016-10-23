@@ -29,5 +29,5 @@ Got to:
 ```bash
 http://localhost:8000/admin
 ```
-Username: admin
+Username: admin  
 Password: admin123
