@@ -5,7 +5,7 @@ from .models import PasswordEntry
 
 
 class PasswordEntryModelAdmin(admin.ModelAdmin):
-    list_display = ["site", "password", "user"]
+    list_display = ["site", "username","password", "user"]
     list_display_links = ["site"]
     search_fields = ["site"]
     list_editable = ["password"]
