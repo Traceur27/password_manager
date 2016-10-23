@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import PasswordEntryForm
+from .models import PasswordEntry
 
 from .forms import LoginForm
 from . import forms
@@ -14,7 +15,8 @@ from django.contrib.auth import authenticate
 
 @login_required
 def index(request):
-    return render(request, "base.html")
+    passwords = PasswordEntry.objects.filter(user=request.user)
+    return render(request, "list.html", {"list":passwords})
 
 def do_login(request):
     pass
