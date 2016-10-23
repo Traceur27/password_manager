@@ -59,7 +59,8 @@ def edit_password(request, id = None):
         form.save()
         return redirect(reverse("index"))
 
-    context = {"form": form, "command": "Edit", "image": "pencil", "action": "edit"}
+    context = {"form": form, "command": "Edit", "image": "pencil", "action":
+            "edit", "id":id}
     return render(request, "password_manager_form.html", context)
 
 @login_required

@@ -13,6 +13,7 @@
 </thead>
 <tr>
     <th>Site</th>
+    <th>Username</th>
     <th>Password</th>
     <th></th>
 </tr>
@@ -20,6 +21,7 @@
 {% for password in list %}
 <tr>
     <td>{{password.site}}</td>
+    <td>{{password.username}}</td>
     <td>{{password.password}}</td>
     <td>
         <button class="btn btn-info" onclick="location.href='/edit-password/{{password.id}}'">
