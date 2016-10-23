@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^add-password/$', views.add_password_entry, name='add-password'),
     url(r'^edit-password/(?P<id>[0-9]*)/$', views.edit_password, name='edit-password'),
-    url(r'^delete-password/(?P<id>[0-9]*)$', views.do_login, name='delete-password')
+    url(r'^delete-password/(?P<id>[0-9]*)$', views.delete_password, name='delete-password')
 ]

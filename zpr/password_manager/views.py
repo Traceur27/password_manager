@@ -11,6 +11,7 @@ from .forms import LoginForm
 from . import forms
 from django.contrib.auth import authenticate
 from django.contrib import messages
+from django import forms
 
 # Create your views here.
 
@@ -47,8 +48,8 @@ def add_password_entry(request):
         messages.success(request, 'Password added successfully.')
         return redirect(reverse('index'))
 
-    context = {"form": form, "command": "Add", "image": "plus"}
-    return render(request, "password_manager_form.html", context)
+    context = {"form": form}
+    return render(request, "add_password.html", context)
 
 
 @login_required
@@ -60,9 +61,26 @@ def edit_password(request, id = None):
         messages.success(request, 'Password entry edited successfully.')
         return redirect(reverse("index"))
 
-    context = {"form": form, "command": "Edit", "image": "pencil", "action":
-            "edit", "id":id}
-    return render(request, "password_manager_form.html", context)
+    context = {"form": form, "id":id}
+    return render(request, "edit_password.html", context)
+
+
+@login_required
+def delete_password(request, id = None):
+    if request.method == 'GET':
+        context = {"id":id}
+        return render(request, "delete_confirmation.html", context)
+
+    a = request.POST.get('yes')
+    b = request.POST.get('no')
+
+    if request.method == 'POST' and request.POST.get('yes') is not None:
+        instance = get_object_or_404(PasswordEntry, id=id)
+        instance.delete()
+        messages.success(request, "Item deleted")
+
+    return redirect(reverse("index"))
+
 
 @login_required
 def profile(request):
@@ -71,3 +89,4 @@ def profile(request):
 @login_required
 def edit_profile(request):
     return render(request, "profile-edit.html", {"user": request.user})
+
