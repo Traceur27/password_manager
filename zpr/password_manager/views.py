@@ -47,7 +47,7 @@ def add_password_entry(request):
         messages.success(request, 'Password added successfully.')
         return redirect(reverse('index'))
 
-    context = {"form": form}
+    context = {"form": form, "command": "Add", "image": "plus"}
     return render(request, "password_manager_form.html", context)
 
 
@@ -60,5 +60,5 @@ def edit_password(request, id = None):
         instance.save()
         return redirect(reverse("index"))
 
-    context = {"form": form}
+    context = {"form": form, "command": "Edit", "image":"pencil"}
     return render(request, "password_manager_form.html", context)
