@@ -54,11 +54,18 @@ def add_password_entry(request):
 @login_required
 def edit_password(request, id = None):
     instance = get_object_or_404(PasswordEntry, id=id)
-    form = PasswordEntryForm(request.POST or None, instance= instance)
+    form = PasswordEntryForm(request.POST or None, instance=instance)
     if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
+        form.save()
         return redirect(reverse("index"))
 
-    context = {"form": form, "command": "Edit", "image":"pencil"}
+    context = {"form": form, "command": "Edit", "image": "pencil", "action": "edit"}
     return render(request, "password_manager_form.html", context)
+
+@login_required
+def profile(request):
+    return render(request, "profile.html", {"user": request.user})
+
+@login_required
+def edit_profile(request):
+    return render(request, "profile-edit.html", {"user": request.user})
