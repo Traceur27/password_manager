@@ -10,6 +10,7 @@ from .models import PasswordEntry
 from .forms import LoginForm
 from . import forms
 from django.contrib.auth import authenticate
+from django.contrib import messages
 
 # Create your views here.
 
@@ -43,7 +44,8 @@ def add_password_entry(request):
         instance = form.save(commit=False)
         instance.user = request.user
         instance.save()
-        return redirect(reverse("index"))
+        messages.success(request, 'Password added successfully.')
+        return redirect(reverse('index'))
 
     context = {"form": form}
     return render(request, "password_manager_form.html", context)
