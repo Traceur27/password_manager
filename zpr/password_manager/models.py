@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class PasswordEntry(models.Model):
     user = models.ForeignKey(User)
+    username = models.CharField(max_length=120)
     site = models.CharField(max_length=120)
     password = models.TextField()
 

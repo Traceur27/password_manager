@@ -12,4 +12,4 @@ class PasswordEntryForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(), max_length=120)
     class Meta:
         model = PasswordEntry
-        fields = ["site", "password"]
+        fields = ["site", "username","password"]

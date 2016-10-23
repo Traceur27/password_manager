@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -46,6 +46,19 @@ def add_password_entry(request):
         instance.save()
         messages.success(request, 'Password added successfully.')
         return redirect(reverse('index'))
+
+    context = {"form": form}
+    return render(request, "password_manager_form.html", context)
+
+
+@login_required
+def edit_password(request, id = None):
+    instance = get_object_or_404(PasswordEntry, id=id)
+    form = PasswordEntryForm(request.POST or None, instance= instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return redirect(reverse("index"))
 
     context = {"form": form}
     return render(request, "password_manager_form.html", context)
