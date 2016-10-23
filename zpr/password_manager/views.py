@@ -57,6 +57,7 @@ def edit_password(request, id = None):
     form = PasswordEntryForm(request.POST or None, instance=instance)
     if form.is_valid():
         form.save()
+        messages.success(request, 'Password entry edited successfully.')
         return redirect(reverse("index"))
 
     context = {"form": form, "command": "Edit", "image": "pencil", "action":
