@@ -8,7 +8,7 @@
 
 <form action="/delete-password/{{id}}" method="post" class="form">
     {% csrf_token %}
-    <h2>Are you sure you want to remove this password?</h2>
+    <h2>Are you sure you want to remove password for <b>{{ site }}</b>?</h2>
     {% buttons %}
         <button type="submit" class="btn btn-success" name="yes">
         {% bootstrap_icon "ok" %} Yes

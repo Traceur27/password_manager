@@ -68,11 +68,9 @@ def edit_password(request, id = None):
 @login_required
 def delete_password(request, id = None):
     if request.method == 'GET':
-        context = {"id":id}
+        instance = get_object_or_404(PasswordEntry, id=id)
+        context = {"id": id, "site": instance.site}
         return render(request, "delete_confirmation.html", context)
-
-    a = request.POST.get('yes')
-    b = request.POST.get('no')
 
     if request.method == 'POST' and request.POST.get('yes') is not None:
         instance = get_object_or_404(PasswordEntry, id=id)
