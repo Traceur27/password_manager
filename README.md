@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ./manage.py runserver
 ```
 
-## PyCharm setub
+## PyCharm setup
 ```bash
 Run -> Edit Configurations -> press "+" sign -> red mark "Fix"
 check "Enable Django Support" -> set project root: password_manager/zpr
@@ -37,5 +37,5 @@ Got to:
 ```bash
 http://localhost:8000/admin
 ```
-Username: admin  
+Username: admin
 Password: admin123
