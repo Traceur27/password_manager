@@ -1,40 +1,45 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.decorators import login_required
-from .forms import PasswordEntryForm
-from .models import PasswordEntry
-
-from .forms import LoginForm
-from . import forms
-from django.contrib.auth import authenticate
 from django.contrib import messages
-from django import forms
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+
+from .forms import PasswordEntryForm
+from .forms import UpdateProfileForm
+from .models import PasswordEntry
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 # Create your views here.
 
 @login_required
 def index(request):
-    passwords = PasswordEntry.objects.filter(user=request.user)
-    return render(request, "list.html", {"list":passwords})
+    password_list = PasswordEntry.objects.filter(user=request.user)
+    paginator = Paginator(password_list, 10) # Show 10 per page
+
+    page = request.GET.get('page')
+    try:
+        passwords = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        passwords = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        passwords = paginator.page(paginator.num_pages)
+
+    return render(request, "list.html", {"list": passwords})
+
 
 def do_login(request):
     pass
 
+
 def register(request):
-    if request.method == 'GET':
-        form = UserCreationForm()
-        return render(request, "registration/register.html", {"form": form})
-
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('login'))
-
+    form = UserCreationForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect(reverse('login'))
     return render(request, "registration/register.html", {"form": form})
+
 
 
 @login_required
@@ -53,7 +58,7 @@ def add_password_entry(request):
 
 
 @login_required
-def edit_password(request, id = None):
+def edit_password(request, id=None):
     instance = get_object_or_404(PasswordEntry, id=id)
     form = PasswordEntryForm(request.POST or None, instance=instance)
     if form.is_valid():
@@ -61,12 +66,12 @@ def edit_password(request, id = None):
         messages.success(request, 'Password entry edited successfully.')
         return redirect(reverse("index"))
 
-    context = {"form": form, "id":id}
+    context = {"form": form, "id": id}
     return render(request, "edit_password.html", context)
 
 
 @login_required
-def delete_password(request, id = None):
+def delete_password(request, id=None):
     if request.method == 'GET':
         instance = get_object_or_404(PasswordEntry, id=id)
         context = {"id": id, "site": instance.site}
@@ -82,9 +87,16 @@ def delete_password(request, id = None):
 
 @login_required
 def profile(request):
-    return render(request, "profile.html", {"user": request.user})
+    password_count = PasswordEntry.objects.all().count()
+    return render(request, "profile.html",
+                  {"user": request.user, "count": password_count})
+
 
 @login_required
 def edit_profile(request):
-    return render(request, "profile-edit.html", {"user": request.user})
-
+    form = UpdateProfileForm(request.POST or None, instance=request.user)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('profile'))
+    return render(request, "profile-edit.html", {"form": form})

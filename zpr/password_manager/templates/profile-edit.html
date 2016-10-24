@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+    <form action="/me/edit/" method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-success">
+                {% bootstrap_icon "pencil" %}
+                OK
+            </button>
+            <button class="btn btn-danger" onclick='location.href="/me/"'>
+                {% bootstrap_icon "remove" %}
+                Cancel
+            </button>
+        {% endbuttons %}
+    </form>
+<div class="container" style="position: absolute; bottom: 0">
+        <div class="well well-sm" style="border-color: red">
+            <div class="row">
+                <div class="col-sm-6 col-md-8">
+                    <h4 style="color: red;">Danger zone</h4>
+                    <div class="btn-group">
+                        <button class="btn btn-danger"
+                                style='margin-bottom: 20px;'
+                                onclick="location.href='/me/remove/'">
+                            {% bootstrap_icon "alert" %}
+                            Remove account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

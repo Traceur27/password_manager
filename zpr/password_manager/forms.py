@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
 from .models import PasswordEntry
 
 class LoginForm(forms.Form):
@@ -13,3 +15,9 @@ class PasswordEntryForm(forms.ModelForm):
     class Meta:
         model = PasswordEntry
         fields = ["site", "username","password"]
+
+
+class UpdateProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']

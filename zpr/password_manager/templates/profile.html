@@ -1,25 +1,44 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 
 {% block content %}
+    <style>
+        .col-centered {
+            float: none;
+            margin: 0 auto;
+        }
+    </style>
+    <div class="center">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-centered">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-8">
+                        <h4>{{ user.username }}</h4>
+                        <p>
+                            {% if user.email %}
+                                <i class="glyphicon glyphicon-envelope"></i>
+                                {{ user.email }}
+                            {% endif %}
+                            <br/>
+                            {% if user.first_name or user.last_name %}
+                                <i class="glyphicon glyphicon-user"></i>
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% endif %}
+                            <br/>
+                            You have {{ count }} password{{ count|pluralize:",s" }} in database.
 
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-6">
-        <div class="well well-sm">
-            <div class="row">
-                <div class="col-sm-6 col-md-8">
-                    <h4>{{user.username}}</h4>
-                            <p>
-                            <i class="glyphicon glyphicon-envelope"></i>{{user.email}}
-                            <br />
-                            <br />
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary">Edit profile</button>
-                            </div>
+                        <div class="btn-group">
+                            <button class="btn btn-warning"
+                                    style='margin-bottom: 20px;'
+                                    onclick="location.href='/me/edit/'">
+                                {% bootstrap_icon "wrench" %}
+                                Edit profile
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
 {% endblock content %}
 

@@ -1,41 +1,46 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load bootstrap_pagination %}
 
 {% block content %}
-<div>
-<button class="btn btn-success" style='margin-bottom: 20px;' onclick="location.href='/add-password/'">
-    {% bootstrap_icon "plus" %}
-    Add Password
-</button>
-</div>
-<div>
-<table class="table">
-</thead>
-<tr>
-    <th>Site</th>
-    <th>Username</th>
-    <th>Password</th>
-    <th></th>
-</tr>
-</thead>
-{% for password in list %}
-<tr>
-    <td>{{password.site}}</td>
-    <td>{{password.username}}</td>
-    <td>{{password.password}}</td>
-    <td>
-        <button class="btn btn-info" onclick="location.href='/edit-password/{{password.id}}'">
-        {% bootstrap_icon "pencil" %}
-        Edit password
+    <div>
+        <button class="btn btn-success" style='margin-bottom: 20px;'
+                onclick="location.href='/add-password/'">
+            {% bootstrap_icon "plus" %}
+            Add Password
         </button>
-        <button class="btn btn-danger" onclick="location.href='/delete-password/{{password.id}}'">
-        {% bootstrap_icon "remove" %}
-        Delete password
-        </button>
-    </td>
-</tr>
-{% endfor %}
-</table>
-</div>
+    </div>
+    <div>
+        <table class="table">
+            </thead>
+            <tr>
+                <th>Site</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for password in list %}
+                <tr>
+                    <td>{{ password.site }}</td>
+                    <td>{{ password.username }}</td>
+                    <td>{{ password.password }}</td>
+                    <td>
+                        <button class="btn btn-info"
+                                onclick="location.href='/edit-password/{{ password.id }}'">
+                            {% bootstrap_icon "pencil" %}
+                            Edit password
+                        </button>
+                        <button class="btn btn-danger"
+                                onclick="location.href='/delete-password/{{ password.id }}'">
+                            {% bootstrap_icon "remove" %}
+                            Delete password
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% bootstrap_paginate list %}
 {% endblock content %}
 
