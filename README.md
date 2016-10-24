@@ -1,26 +1,26 @@
 # password_manager
 
 ## Setup:
-[Clone repo]
+###Clone repo
 ```bash
 git clone https://github.com/Traceur27/password_manager.git
 ```
 
-[Prepare virtual environment]
+###Prepare virtual environment
 ```bash
 virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
 
-[Before running server for the first time]
+###Before running server for the first time
 ```bash
 ./manage.py makemigrations
 ./manage.py migrate
 ./manage.py loaddata fixtures/admin.json
 ```
 
-[Starting server]
+###Starting server
 ```bash
 ./manage.py runserver
 ```
@@ -37,5 +37,7 @@ Got to:
 ```bash
 http://localhost:8000/admin
 ```
+
 Username: admin
+
 Password: admin123
