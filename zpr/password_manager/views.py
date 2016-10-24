@@ -87,7 +87,7 @@ def delete_password(request, id=None):
 
 @login_required
 def profile(request):
-    password_count = PasswordEntry.objects.all().count()
+    password_count = PasswordEntry.objects.filter(user=request.user).count()
     return render(request, "profile.html",
                   {"user": request.user, "count": password_count})
 
@@ -98,5 +98,6 @@ def edit_profile(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
+            messages.success(request, "Profile save successfully")
             return redirect(reverse('profile'))
     return render(request, "profile-edit.html", {"form": form})

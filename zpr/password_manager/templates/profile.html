@@ -18,13 +18,13 @@
                             {% if user.email %}
                                 <i class="glyphicon glyphicon-envelope"></i>
                                 {{ user.email }}
+                                <br/>
                             {% endif %}
-                            <br/>
                             {% if user.first_name or user.last_name %}
                                 <i class="glyphicon glyphicon-user"></i>
                                 {{ user.first_name }} {{ user.last_name }}
+                                <br/>
                             {% endif %}
-                            <br/>
                             You have {{ count }} password{{ count|pluralize:",s" }} in database.
 
                         <div class="btn-group">
