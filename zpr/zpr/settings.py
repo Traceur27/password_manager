@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'bootstrap_pagination',
+    'django_extensions',
     'password_manager',
     'django.contrib.admin',
 ]
