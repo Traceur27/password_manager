@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
 {% load bootstrap_pagination %}
+{% load app_filters %}
 
 {% block content %}
     <div>
@@ -23,9 +24,9 @@
                 </thead>
                 {% for password in list %}
                     <tr>
-                        <td>{{ password.site }}</td>
+                        <td>{{ password.name }}</td>
                         <td>{{ password.username }}</td>
-                        <td>{{ password.password }}</td>
+                        <td>{% hidePassword password session.master %}</td>
                         <td>
                             <button class="btn btn-info"
                                     onclick="location.href='/edit-password/{{ password.id }}'">

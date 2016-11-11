@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from .forms import PasswordEntryForm
@@ -30,7 +31,12 @@ def index(request):
 
 
 def do_login(request):
-    pass
+    form = AuthenticationForm(request, data=request.POST or None)
+    if form.is_valid():
+        login(request, form.user_cache)
+        request.session['master'] = form.cleaned_data.get('password')
+        return redirect(reverse('index'))
+    return render(request, "registration/login.html", {"form": form})
 
 
 def register(request):
@@ -49,7 +55,7 @@ def add_password_entry(request):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.user = request.user
-        instance.save()
+        instance.save(master=request.session['master'])
         messages.success(request, 'Password added successfully.')
         return redirect(reverse('index'))
 
