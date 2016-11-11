@@ -57,3 +57,8 @@ http://localhost:8000/admin
 Username: admin
 
 Password: admin123
+
+## Testing
+```bash
+pytest
+```
