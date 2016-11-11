@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf.urls.static import static
+from zpr import settings
 
 urlpatterns = [
         url(r'^admin/', admin.site.urls),
         url(r'^', include('password_manager.urls'))
-        ]
+        ] + static(settings.STATIC_URL)
