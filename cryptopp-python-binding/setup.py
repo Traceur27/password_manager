@@ -6,7 +6,7 @@ from distutils.extension import Extension
 setup(name="Python Crypto++ binding",
     ext_modules=[
         Extension("cryptopp", ["crypto.cpp"],
-        libraries = ["boost_python3", "cryptopp"],
+        libraries = ["boost_python3"],
         extra_compile_args=['-std=c++11'],
         )
     ])
