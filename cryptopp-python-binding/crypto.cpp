@@ -107,14 +107,15 @@ std::string base64_decode(std::string const& encoded_string) {
   return ret;
 }
 
-str passwordXor(str dataToEncrypt, str masterPassword) {
-    std::vector<char> result;
+str passwordXor(object dataToEncrypt, str masterPassword) {
     int masterPasswordLenght = len(masterPassword);
     int dataLen = len(dataToEncrypt);
     std::string rawData = extract<std::string>(dataToEncrypt);
     std::string rawMasterPassword = extract<std::string>(masterPassword);
-    for (int i = 0, masterPasswordCharIndex = 0; i < dataLen; i++, masterPasswordCharIndex++) {
+    std::vector<char> result;
+    for (int i = 0, masterPasswordCharIndex = 0; i < dataLen; i++) {
         result.push_back(rawData[i] ^ rawMasterPassword[masterPasswordCharIndex]);
+        masterPasswordCharIndex++;
         if (masterPasswordCharIndex == masterPasswordLenght)
             masterPasswordCharIndex = 0;
     }

@@ -6,14 +6,14 @@ import base64
 
 register = template.Library()
 
-
-@register.inclusion_tag("hidden-password.html")
+@register.simple_tag
 def hidePassword(encryptedPassword, masterPassword):
+    print(masterPassword)
     algorithm = UserExtension.objects.get(user=encryptedPassword.user).encryption_algorithm
-    tag = "<span real='"
+    decodedPass = base64.b64decode(encryptedPassword.password)
     if algorithm == 'xor':
-        hidden = str(base64.b64encode(passwordXor(encryptedPassword.password, masterPassword).encode()).decode("utf-8") )
+        return passwordXor(decodedPass, masterPassword)
     else:
-        hidden = str(base64.b64encode(encryptedPassword.password.encode()).decode("utf-8") )
-    return {'encoded': hidden}
+        hidden = str(base64.b64encode(decodedPass.decode('ascii')).decode("ascii") )
+    return hidden
 
