@@ -91,13 +91,13 @@ def edit_password(request, id=None):
 def delete_password(request, id=None):
     if request.method == 'GET':
         instance = get_object_or_404(PasswordEntry, id=id)
-        context = {"id": id, "site": instance.site}
+        context = {"id": id, "name": instance.name }
         return render(request, "delete_confirmation.html", context)
 
-    if request.method == 'POST' and request.POST.get('yes') is not None:
+    if request.method == 'POST' and request.POST.get('yes', ''):
         instance = get_object_or_404(PasswordEntry, id=id)
         instance.delete()
-        messages.success(request, "Item deleted")
+        messages.success(request, "Password entry deleted")
 
     return redirect(reverse("index"))
 
