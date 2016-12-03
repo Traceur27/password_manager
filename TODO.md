@@ -1,2 +1,3 @@
+- dodatokowy algorytm szyfrowania do wyboru
 - zmiana algorytmu szyfromwania na stronie edycji profilu
 - testy
