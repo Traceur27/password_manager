@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<form action="" method="post" class="form">
+    {% csrf_token %}
+    <h2>Are you sure you want to remove your account ?</h2>
+    <h3>If so, confirm deletion by typing your account password in</h3>
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-warning" value="yes" name="answer">
+        {% bootstrap_icon "ok" %} Delete
+        </button>
+        <button class="btn btn-danger" onclick='location.href="/me/edit/"'>
+                {% bootstrap_icon "remove" %}
+                Cancel
+        </button>
+    {% endbuttons %}
+</form>
+
+{% endblock content %}

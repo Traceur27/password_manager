@@ -6,8 +6,10 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from .forms import PasswordEntryForm
 from .forms import UpdateProfileForm
+from .forms import RemoveAccountForm
 from .models import PasswordEntry
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth import logout
 
 
 # Create your views here.
@@ -104,7 +106,7 @@ def edit_profile(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            messages.success(request, "Profile save successfully")
+            messages.success(request, "Profile saved successfully")
             return redirect(reverse('profile'))
     return render(request, "profile-edit.html", {"form": form})
 
@@ -123,4 +125,17 @@ def password_change(request):
         messages.success(request, "Master password change successfully")
         return redirect(reverse('profile'))
     return render(request, "registration/password_change_form.html",
+                  {"form": form})
+
+
+@login_required
+def remove_account(request):
+    form = RemoveAccountForm(request.user, request.POST or None)
+    if form.is_valid():
+        logout(request)
+        form.save()
+        return redirect(reverse('login'))
+    return render(request,
+            "confirm_remove_account.html",
             {"form": form})
+
