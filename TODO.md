@@ -1,3 +1,4 @@
 - dodatokowy algorytm szyfrowania do wyboru
+    - RC4
 - zmiana algorytmu szyfromwania na stronie edycji profilu
 - testy
