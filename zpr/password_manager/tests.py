@@ -44,3 +44,18 @@ def test_user_can_register():
     assert response.status_code == 302
     user = User.objects.get(id=1)
     assert user.username == 'bob'
+
+@pytest.mark.django_db
+def test_user_can_login():
+    User.objects.create_user(username='test', password='test')
+    c = Client()
+    assert c.login(username = 'test', password = 'test') == True
+    response = c.get("/")
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_user_cant_login_if_not_have_account():
+    c = Client()
+    assert c.login(username = 'test', password = 'test') == False
+
