@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from .forms import PasswordEntryForm
@@ -15,7 +15,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required
 def index(request):
     password_list = PasswordEntry.objects.filter(user=request.user)
-    paginator = Paginator(password_list, 10) # Show 10 per page
+    paginator = Paginator(password_list, 10)  # Show 10 per page
 
     page = request.GET.get('page')
     try:
@@ -47,7 +47,6 @@ def register(request):
     return render(request, "registration/register.html", {"form": form})
 
 
-
 @login_required
 def add_password_entry(request):
     form = PasswordEntryForm(request.POST or None)
@@ -68,7 +67,8 @@ def edit_password(request, id=None):
     instance = get_object_or_404(PasswordEntry, id=id)
     form = PasswordEntryForm(request.POST or None, instance=instance)
     if form.is_valid():
-        form.save()
+        instance = form.save(commit=False)
+        instance.save(master=request.session['master'])
         messages.success(request, 'Password entry edited successfully.')
         return redirect(reverse("index"))
 
@@ -107,3 +107,20 @@ def edit_profile(request):
             messages.success(request, "Profile save successfully")
             return redirect(reverse('profile'))
     return render(request, "profile-edit.html", {"form": form})
+
+
+@login_required
+def password_change(request):
+    form = PasswordChangeForm(request.user, request.POST or None)
+    if form.is_valid():
+        form.save()
+        update_session_auth_hash(request, request.user)
+        passwords = PasswordEntry.objects.filter(user=request.user)
+        for p in passwords:
+            p.rehash(form.cleaned_data.get('old_password'),
+                     form.cleaned_data.get('new_password1'))
+        request.session['master'] = form.cleaned_data.get('new_password1')
+        messages.success(request, "Master password change successfully")
+        return redirect(reverse('profile'))
+    return render(request, "registration/password_change_form.html",
+            {"form": form})
