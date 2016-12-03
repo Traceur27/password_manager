@@ -12,6 +12,16 @@
             Add Password
         </button>
     </div>
+    <form>
+        <div class="col-lg-5">
+            <input class="form-control input-large" placeholder="Filter"
+            value='{{query}}' type=text name=filter>
+        </div>
+            <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-search"></span>
+                    Filter
+            </button>
+    </form>
     {% if list %}
         <div>
             <table class="table">

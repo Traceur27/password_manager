@@ -10,13 +10,22 @@ from .forms import RemoveAccountForm
 from .models import PasswordEntry
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import logout
+from django.db.models import Q
 
 
 # Create your views here.
 
 @login_required
 def index(request):
-    password_list = PasswordEntry.objects.filter(user=request.user)
+    query = Q(user=request.user)
+    filter_query = request.GET.get('filter','')
+    print (filter_query)
+    query=None
+    if filter_query:
+        query = Q(name__icontains=filter_query) | Q(username__icontains=filter_query)
+        password_list = PasswordEntry.objects.filter(query, user=request.user)
+    else:
+        password_list = PasswordEntry.objects.filter(user=request.user)
     paginator = Paginator(password_list, 10)  # Show 10 per page
 
     page = request.GET.get('page')
@@ -29,7 +38,7 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         passwords = paginator.page(paginator.num_pages)
 
-    return render(request, "list.html", {"list": passwords})
+    return render(request, "list.html", {"list": passwords, "query": filter_query})
 
 
 def do_login(request):
