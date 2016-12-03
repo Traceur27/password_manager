@@ -37,8 +37,14 @@
                     <tr>
                         <td>{{ password.name }}</td>
                         <td>{{ password.username }}</td>
-                        <td> ************ </td>
+                        <td id='tr{{forloop.counter}}' mode='hidden'> ************ </td>
                         <td>
+                            <button class="btn btn-primary" onclick="togglePasswordShowHide('{% hidePassword password request.session.master %}', '{{forloop.counter}}')">
+                                    <span id='icon{{forloop.counter}}' class="glyphicon glyphicon-eye-open"></span>
+                                    <span id='bsh{{forloop.counter}}'>
+                                        Show Password
+                                    </span>
+                            </button>
                             <button class="btn btn-success"
                                     onclick="decodeAndCopy('{% hidePassword password request.session.master %}')">
                                     {% bootstrap_icon "pencil" %}
@@ -61,6 +67,6 @@
         </div>
         {% bootstrap_paginate list %}
     {% endif %}
-    <script src="{% static 'js/copy-helper.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 {% endblock content %}
 

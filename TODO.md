@@ -1,2 +1,2 @@
-- guzik pokaż hasło
 - zmiana algorytmu szyfromwania na stronie edycji profilu
+- testy

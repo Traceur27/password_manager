@@ -28,12 +28,14 @@ class PasswordEntry(models.Model):
         """
         Funkcja zmienia klucz szyfujący hasła
         """
-        self.decrypt(old_password)
+        self.password = self.decrypt(old_password)
         self.save(master=new_password)
 
     def encrypt(self, master_password):
         """
         Szyfruje pole password i zapisuje w nim ciąg base64
+        Pole password powinno być zapisane w postaci jawnej przed wywołaniem
+        tej metody
         """
         algorithm = UserExtension.objects.get(
                 user=self.user).encryption_algorithm
@@ -44,15 +46,15 @@ class PasswordEntry(models.Model):
 
     def decrypt(self, master_password):
         """
-        Odszyfrowuje pole password i zastępuje je hasłem w postaci jawnej
+        Odszyfrowuje pole password i zwraca hasło w postaci jawnej
         """
         algorithm = UserExtension.objects.get(
                 user=self.user).encryption_algorithm
 
         decodedPass = base64.b64decode(self.password)
         if algorithm == 'xor':
-            self.password = passwordXor(decodedPass, master_password)
-        self.password = base64.b64decode(self.password)
+            return base64.b64decode(passwordXor(decodedPass, master_password))
+        return base64.b64decode(self.password)
 
     def __str__(self):
         return self.name
