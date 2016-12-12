@@ -1,9 +1,25 @@
-# password_manager
+# Password Manager
+Simple password manager web app with fast c++ encryption backend.
+
+## Implemented encryption algorithms
+- simple xor
+- RC4
 
 ## Setup:
 ###Clone repo
 ```bash
 git clone https://github.com/Traceur27/password_manager.git
+```
+
+###Install python3
+Depending on your system you will need to visit
+[Python Download](https://www.python.org/downloads/) or use system packet
+manager. Choose version 3 of Python interpreter.
+
+###Install virtualenv
+Make sure python executable is in your path along with bin directory and type
+```bash
+pip install virtualenv
 ```
 
 ###Prepare virtual environment
@@ -59,6 +75,8 @@ Username: admin
 Password: admin123
 
 ## Testing
+Automatic tests are handled by pytest
 ```bash
+cd zpr
 pytest
 ```
