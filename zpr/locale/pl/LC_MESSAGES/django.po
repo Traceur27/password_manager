@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-16 16:52+0000\n"
-"PO-Revision-Date: 2016-12-16 17:52+0100\n"
+"POT-Creation-Date: 2016-12-16 20:57+0000\n"
+"PO-Revision-Date: 2016-12-16 21:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -19,21 +19,21 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.11\n"
 
-#: password_manager/forms.py:9 password_manager/models.py:19
-#: password_manager/templates/list.html:32
+#: password_manager/forms.py:9 password_manager/models.py:26
+#: password_manager/templates/list.html:36
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
-#: password_manager/forms.py:11 password_manager/models.py:20
-#: password_manager/templates/list.html:33
+#: password_manager/forms.py:11 password_manager/models.py:27
+#: password_manager/templates/list.html:37
 msgid "Password"
 msgstr "Hasło"
 
-#: password_manager/models.py:18 password_manager/templates/list.html:31
+#: password_manager/models.py:25 password_manager/templates/list.html:35
 msgid "Name"
 msgstr "Nazwa"
 
-#: password_manager/models.py:68
+#: password_manager/models.py:86
 msgid "Algorithm"
 msgstr "Algorytm"
 
@@ -46,32 +46,46 @@ msgstr "Dodaj hasło"
 msgid "Cancel"
 msgstr "Anuluj"
 
+#: password_manager/templates/confirm_remove_account.html:12
+msgid "Are you sure you want to remove your account ?"
+msgstr "Czy jesteś pewien, że chcesz usunąć swoje konto ?"
+
+#: password_manager/templates/confirm_remove_account.html:13
+msgid "If so, confirm deletion by typing in your account password"
+msgstr ""
+"Jeśli tak, to potwierdź usunięcie poprzez wpisanie swojego hasła do konta"
+
 #: password_manager/templates/list.html:13
 msgid "Add Password"
 msgstr "Dodaj hasło"
 
+#: password_manager/templates/list.html:18
 #: password_manager/templates/list.html:23
 msgid "Filter"
 msgstr "Filtruj"
 
-#: password_manager/templates/list.html:46
-#: password_manager/templates/list.html:88
+#: password_manager/templates/list.html:27
+msgid "Clear"
+msgstr "Wyczyść"
+
+#: password_manager/templates/list.html:50
+#: password_manager/templates/list.html:92
 msgid "Show Password"
 msgstr "Pokaż hasło"
 
-#: password_manager/templates/list.html:52
+#: password_manager/templates/list.html:56
 msgid "Copy password to clipboard"
 msgstr "Skopiuj hasło do schowka"
 
-#: password_manager/templates/list.html:57
+#: password_manager/templates/list.html:61
 msgid "Edit password"
 msgstr "Edytuj hasło"
 
-#: password_manager/templates/list.html:62
+#: password_manager/templates/list.html:66
 msgid "Delete password"
 msgstr "Usuń hasło"
 
-#: password_manager/templates/list.html:81
+#: password_manager/templates/list.html:85
 msgid "Hide Password"
 msgstr "Ukryj hasło"
 
