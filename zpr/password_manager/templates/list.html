@@ -15,12 +15,16 @@
     </div>
     <form>
         <div class="col-lg-5">
-            <input class="form-control input-large" placeholder="Filter"
+            <input class="form-control input-large" placeholder="{% trans 'Filter' %}"
             value='{{query}}' type=text name=filter>
         </div>
             <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-search"></span>
                     {% trans 'Filter' %}
+            </button>
+            <button type="button" class="btn btn-danger" onclick="location.href='/'">
+                    <span class="glyphicon glyphicon-fire"></span>
+                    {% trans 'Clear' %}
             </button>
     </form>
     {% if list %}
