@@ -10,10 +10,10 @@
     {% csrf_token %}
     <h2>Are you sure you want to remove password for <b>{{ name }}</b>?</h2>
     {% buttons %}
-        <button type="submit" class="btn btn-success" name="yes">
+        <button type="submit" class="btn btn-success" name="answer" value="yes">
         {% bootstrap_icon "ok" %} Yes
         </button>
-        <button type="submit" class="btn btn-danger" name="no">
+        <button type="submit" class="btn btn-danger" name="answer" value="no">
         {% bootstrap_icon "remove" %} No
         </button>
     {% endbuttons %}

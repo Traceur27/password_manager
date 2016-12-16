@@ -20,7 +20,6 @@ from django.db.models import Q
 def index(request):
     query = Q(user=request.user)
     filter_query = request.GET.get('filter','')
-    print (filter_query)
     query=None
     if filter_query:
         query = Q(name__icontains=filter_query) | Q(username__icontains=filter_query)
@@ -76,7 +75,7 @@ def add_password_entry(request):
 
 @login_required
 def edit_password(request, id=None):
-    instance = get_object_or_404(PasswordEntry, id=id)
+    instance = get_object_or_404(PasswordEntry, id=id, user=request.user)
     form = PasswordEntryForm(request.POST or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -91,12 +90,12 @@ def edit_password(request, id=None):
 @login_required
 def delete_password(request, id=None):
     if request.method == 'GET':
-        instance = get_object_or_404(PasswordEntry, id=id)
+        instance = get_object_or_404(PasswordEntry, id=id, user=request.user)
         context = {"id": id, "name": instance.name }
         return render(request, "delete_confirmation.html", context)
 
-    if request.method == 'POST' and request.POST.get('yes', ''):
-        instance = get_object_or_404(PasswordEntry, id=id)
+    if request.method == 'POST' and request.POST.get('answer', '') == "yes":
+        instance = get_object_or_404(PasswordEntry, id=id, user=request.user)
         instance.delete()
         messages.success(request, "Password entry deleted")
 
