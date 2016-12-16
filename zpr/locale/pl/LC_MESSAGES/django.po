@@ -117,7 +117,7 @@ msgstr[2] "%(count)s haseł"
 
 #: password_manager/templates/profile.html:31
 msgid "in database"
-msgstr "zapisanych w bazie"
+msgstr "w bazie"
 
 #: password_manager/templates/profile.html:38
 msgid "Edit profile"

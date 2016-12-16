@@ -7,7 +7,8 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import PasswordEntryForm
 from .forms import UpdateProfileForm
 from .forms import RemoveAccountForm
-from .models import PasswordEntry
+from .forms import UpdateAlgorithmForm
+from .models import PasswordEntry, UserExtension
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import logout
 from django.db.models import Q
@@ -111,13 +112,21 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
-    form = UpdateProfileForm(request.POST or None, instance=request.user)
+    update_profile_form = UpdateProfileForm(request.POST or None,
+            instance=request.user)
+    change_algorithm_form = UpdateAlgorithmForm(request.POST or None,
+            instance=UserExtension.objects.get(user=request.user))
     if request.method == "POST":
-        if form.is_valid():
-            form.save()
+        if update_profile_form.is_valid():
+            update_profile_form.save()
+            if change_algorithm_form.is_valid():
+                instance = change_algorithm_form.save(commit=False)
+                instance.save(master=request.session['master'])
             messages.success(request, "Profile saved successfully")
             return redirect(reverse('profile'))
-    return render(request, "profile-edit.html", {"form": form})
+    return render(request, "profile-edit.html", {"pform": update_profile_form,
+        "aform": change_algorithm_form})
+
 
 
 @login_required

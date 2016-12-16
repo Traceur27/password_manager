@@ -5,7 +5,8 @@
 
     <form action="/me/edit/" method="post" class="form">
         {% csrf_token %}
-        {% bootstrap_form form %}
+        {% bootstrap_form pform %}
+        {% bootstrap_form aform %}
         {% buttons %}
             <button type="submit" class="btn btn-success">
                 {% bootstrap_icon "pencil" %}

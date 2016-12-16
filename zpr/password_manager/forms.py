@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
-from .models import PasswordEntry
+from .models import PasswordEntry, UserExtension
 
 
 class LoginForm(forms.Form):
@@ -26,6 +26,12 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
+
+
+class UpdateAlgorithmForm(forms.ModelForm):
+    class Meta:
+        model = UserExtension
+        fields = ['encryption_algorithm']
 
 
 class RemoveAccountForm(forms.Form):
