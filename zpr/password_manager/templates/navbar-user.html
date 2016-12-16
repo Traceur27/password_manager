@@ -1,11 +1,12 @@
 {% extends "navbar-base.html" %}
+{% load i18n %}
 
 {% block left%}
-<li class="active"><a>Logged in as {{user}}</a></li>
+<li class="active"><a>{% trans 'Logged in as' %} {{user}}</a></li>
 {% endblock left%}
 
 {% block right %}
-<li><a href="/me/"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-<li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+<li><a href="/me/"><span class="glyphicon glyphicon-user"></span> {% trans 'Profile' %}</a></li>
+<li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> {% trans 'Logout' %}</a></li>
 {% endblock right %}
 
