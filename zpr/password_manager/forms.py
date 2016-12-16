@@ -1,27 +1,25 @@
 from django import forms
-from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
 from .models import PasswordEntry
 
 
 class LoginForm(forms.Form):
-    login = forms.CharField(label='Login', max_length=30)
+    login = forms.CharField(label=_("Username"), max_length=30)
     password = forms.CharField(
-            label='Password',
+            label=_("Password"),
             max_length=20,
             widget=forms.PasswordInput())
 
 
 class PasswordEntryForm(forms.ModelForm):
-    password = forms.CharField(
-            widget=forms.PasswordInput(),
-            max_length=120)
-
     class Meta:
         model = PasswordEntry
         fields = ["name", "username", "password"]
+        widgets = {
+                "password": forms.PasswordInput(),
+                }
 
 
 class UpdateProfileForm(forms.ModelForm):

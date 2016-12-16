@@ -4,6 +4,8 @@ from cryptopp import passwordXor
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import base64
+from django.utils.translation import ugettext_lazy as _
+
 
 # Create your models here.
 
@@ -13,9 +15,9 @@ class PasswordEntry(models.Model):
     Klasa opisuje rekord zapamiętanego hasła
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=120)
-    username = models.CharField(max_length=120)
-    password = models.TextField()
+    name = models.CharField(_("Name"), max_length=120)
+    username = models.CharField(_("Username"), max_length=120)
+    password = models.TextField(_("Password"))
 
     def save(self, *args, **kwargs):
         """
@@ -63,7 +65,7 @@ class PasswordEntry(models.Model):
 class UserExtension(models.Model):
     user = models.OneToOneField(User)
     ALGORITHMS = (("xor", "xor"), )
-    encryption_algorithm = models.CharField(
+    encryption_algorithm = models.CharField(_("Algorithm"),
         max_length=50, choices=ALGORITHMS, default='xor')
 
 

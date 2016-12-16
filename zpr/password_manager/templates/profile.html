@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load i18n %}
 
 {% block content %}
     <style>
@@ -25,14 +26,16 @@
                                 {{ user.first_name }} {{ user.last_name }}
                                 <br/>
                             {% endif %}
-                            You have {{ count }} password{{ count|pluralize:",s" }} in database.
+                            {% trans 'You have' %}
+                            {% blocktrans count counter=count %}{{ count }} password{% plural %}{{ count }} passwords{% endblocktrans %}
+                            {% trans 'in database' %}.
 
                         <div class="btn-group">
                             <button class="btn btn-warning"
                                     style='margin-bottom: 20px;'
                                     onclick="location.href='/me/edit/'">
                                 {% bootstrap_icon "wrench" %}
-                                Edit profile
+                                {% trans 'Edit profile' %}
                             </button>
                         </div>
                     </div>

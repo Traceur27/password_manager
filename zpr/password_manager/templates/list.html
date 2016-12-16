@@ -3,13 +3,14 @@
 {% load bootstrap_pagination %}
 {% load app_filters %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     <div>
         <button class="btn btn-success" style='margin-bottom: 20px;'
                 onclick="location.href='/add-password/'">
             {% bootstrap_icon "plus" %}
-            Add Password
+            {% trans 'Add Password' %}
         </button>
     </div>
     <form>
@@ -19,7 +20,7 @@
         </div>
             <button type="submit" class="btn btn-primary">
                     <span class="glyphicon glyphicon-search"></span>
-                    Filter
+                    {% trans 'Filter' %}
             </button>
     </form>
     {% if list %}
@@ -27,9 +28,9 @@
             <table class="table">
                 </thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Password</th>
+                    <th>{% trans 'Name' %}</th>
+                    <th>{% trans 'Username' %}</th>
+                    <th>{% trans 'Password' %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -42,23 +43,23 @@
                             <button class="btn btn-primary" onclick="togglePasswordShowHide('{% hidePassword password request.session.master %}', '{{forloop.counter}}')">
                                     <span id='icon{{forloop.counter}}' class="glyphicon glyphicon-eye-open"></span>
                                     <span id='bsh{{forloop.counter}}'>
-                                        Show Password
+                                        {% trans 'Show Password' %}
                                     </span>
                             </button>
                             <button class="btn btn-success"
                                     onclick="decodeAndCopy('{% hidePassword password request.session.master %}')">
                                     {% bootstrap_icon "copy" %}
-                                    Copy password to clipboard
+                                    {% trans 'Copy password to clipboard' %}
                             </button>
                             <button class="btn btn-info"
                                     onclick="location.href='/edit-password/{{ password.id }}'">
                                 {% bootstrap_icon "pencil" %}
-                                Edit password
+                                {% trans 'Edit password' %}
                             </button>
                             <button class="btn btn-danger"
                                     onclick="location.href='/delete-password/{{ password.id }}'">
                                 {% bootstrap_icon "remove" %}
-                                Delete password
+                                {% trans 'Delete password' %}
                             </button>
                         </td>
                     </tr>
@@ -68,5 +69,27 @@
         {% bootstrap_paginate list %}
     {% endif %}
     <script src="{% static 'js/app.js' %}"></script>
+    <script>
+        function togglePasswordShowHide(base, id, button) {
+            let tr = document.getElementById("tr" + id)
+            let b = document.getElementById("bsh" + id)
+            let icon = document.getElementById("icon" + id)
+            let mode = tr.getAttribute('mode')
+            if (mode === "hidden") {
+                tr.innerHTML = window.atob(base);
+                tr.setAttribute('mode', 'plain')
+                b.innerHTML = "{% trans "Hide Password" %}"
+                icon.className = icon.className.replace( /(?:^|\s)glyphicon-eye-open(?!\S)/g , '' )
+                icon.className += ' glyphicon-eye-close'
+            }
+            else {
+                tr.innerHTML = "************"
+                tr.setAttribute('mode', 'hidden')
+                b.innerHTML = "{% trans "Show Password" %}"
+                icon.className = icon.className.replace( /(?:^|\s)glyphicon-eye-close(?!\S)/g , '' )
+                icon.className += ' glyphicon-eye-open'
+            }
+        }
+    </script>
 {% endblock content %}
 

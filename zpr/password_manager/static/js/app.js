@@ -38,23 +38,3 @@ function decodeAndCopy(base) {
     document.body.removeChild(textArea);
 }
 
-function togglePasswordShowHide(base, id, button) {
-    let tr = document.getElementById("tr" + id)
-    let b = document.getElementById("bsh" + id)
-    let icon = document.getElementById("icon" + id)
-    let mode = tr.getAttribute('mode')
-    if (mode === "hidden") {
-        tr.innerHTML = window.atob(base);
-        tr.setAttribute('mode', 'plain')
-        b.innerHTML = "Hide Password"
-        icon.className = icon.className.replace( /(?:^|\s)glyphicon-eye-open(?!\S)/g , '' )
-        icon.className += ' glyphicon-eye-close'
-    }
-    else {
-        tr.innerHTML = "************"
-        tr.setAttribute('mode', 'hidden')
-        b.innerHTML = "Show Password"
-        icon.className = icon.className.replace( /(?:^|\s)glyphicon-eye-close(?!\S)/g , '' )
-        icon.className += ' glyphicon-eye-open'
-    }
-}
