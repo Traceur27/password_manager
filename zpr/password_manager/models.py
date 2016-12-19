@@ -35,9 +35,9 @@ class PasswordEntry(models.Model):
 
     def rehash(self, old_password, new_password):
         """
-        Funkcja zmienia klucz szyfujący hasła
+        Funkcja zmienia klucz szyfujący hasło
         """
-        self.password = self.decrypt(old_password)
+        self.decrypt_in_place(old_password)
         self.save(master=new_password)
 
     def encrypt(self, master_password):
@@ -66,8 +66,9 @@ class PasswordEntry(models.Model):
     def decrypt_in_place(self, master_password):
         """
         Odszyfrowuje pole password i ustawia je na postać jawną
+
         Uwaga:
-        Dwukrotne użycie rzuca wyjątek
+        Dwukrotne użycie rzuca wyjątek związany z kodowaniem base64
         """
 
         self.password = self.decrypt(master_password)
