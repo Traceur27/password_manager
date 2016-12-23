@@ -30,7 +30,7 @@ pip install -r requirements.txt
 ```
 
 ###Install C++ module
-Beafore building C++ module you must install
+Before building C++ module you must install
 [Boost Python](http://www.boost.org/libs/python/doc/)
 module for your system.
 
