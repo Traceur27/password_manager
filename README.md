@@ -50,6 +50,7 @@ to start using module
 ./manage.py makemigrations
 ./manage.py migrate
 ./manage.py loaddata fixtures/admin.json
+./manage.py compilemessages
 ```
 
 ###Starting server
