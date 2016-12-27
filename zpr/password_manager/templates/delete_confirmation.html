@@ -3,18 +3,19 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
+{% load i18n %}
 
 {% block content %}
 
 <form action="/delete-password/{{id}}" method="post" class="form">
     {% csrf_token %}
-    <h2>Are you sure you want to remove password for <b>{{ name }}</b>?</h2>
+    <h2>{% trans 'Are you sure you want to remove password for ' %}<b>{{ name }}</b>?</h2>
     {% buttons %}
         <button type="submit" class="btn btn-success" name="answer" value="yes">
-        {% bootstrap_icon "ok" %} Yes
+        {% bootstrap_icon "ok" %} {% trans 'Yes' %}
         </button>
         <button type="submit" class="btn btn-danger" name="answer" value="no">
-        {% bootstrap_icon "remove" %} No
+        {% bootstrap_icon "remove" %} {% trans 'No' %}
         </button>
     {% endbuttons %}
 </form>

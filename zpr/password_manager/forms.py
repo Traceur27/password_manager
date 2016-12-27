@@ -36,7 +36,7 @@ class UpdateAlgorithmForm(forms.ModelForm):
 
 class RemoveAccountForm(forms.Form):
     password = forms.CharField(
-            label='Password',
+            label=_("Password"),
             max_length=20,
             widget=forms.PasswordInput())
 

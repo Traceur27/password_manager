@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load i18n %}
 
 {% block content %}
 
@@ -10,29 +11,29 @@
         {% buttons %}
             <button type="submit" class="btn btn-success">
                 {% bootstrap_icon "pencil" %}
-                OK
+                {% trans 'OK' %}
             </button>
             <button class="btn btn-danger" onclick='location.href="/me/"'>
                 {% bootstrap_icon "remove" %}
-                Cancel
+                {% trans 'Cancel' %}
             </button>
         {% endbuttons %}
     </form>
     <button class="btn btn-primary" onclick='location.href="/me/change-password/"'>
         {% bootstrap_icon "lock" %}
-        Change Master Password
+        {% trans 'Change Master Password' %}
     </button>
 <div class="container" style="position: absolute; bottom: 0">
         <div class="well well-sm" style="border-color: red;margin:1px;">
             <div class="row">
                 <div class="col-sm-6 col-md-8">
-                    <h4 style="color: red;">Danger zone</h4>
+                    <h4 style="color: red;">{% trans 'Danger zone'%}</h4>
                     <div class="btn-group">
                         <button class="btn btn-danger"
                                 style='margin-bottom: 20px;'
                                 onclick="location.href='/me/remove/'">
                             {% bootstrap_icon "alert" %}
-                            Remove account
+                            {% trans 'Remove account' %}
                         </button>
                     </div>
                 </div>

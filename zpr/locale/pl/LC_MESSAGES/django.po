@@ -145,6 +145,53 @@ msgstr "Nie masz jeszcze konta ?"
 msgid "Create Account"
 msgstr "Utwórz nowe konto"
 
+#: password_manager/templates/registration/logged_out.html:10
+msgid "Logout successful"
+msgstr "Zostałeś poprawnie wylogowany"
+
+#: password_manager/templates/registration/logged_out.html:13
+msgid "Thank you for using our service"
+msgstr "Dziękujemy za skorzystanie z naszych usług"
+
+#: password_manager/templates/registration/logged_out.html:17
+msgid "Login again"
+msgstr "Zaloguj się ponownie"
+
+#: password_manager/templates/edit_password.html:8
+msgid "Edit site and password"
+msgstr "Edycja strony i hasła"
+
+#: password_manager/templates/edit_password.html:16
+msgid "Edit"
+msgstr "Edytuj"
+
+#: password_manager/templates/delete_confirmation.html:12
+msgid "Are you sure you want to remove password for "
+msgstr "Jesteś pewny, że chcesz usunąć hasło dla strony "
+
+#: password_manager/templates/delete_confirmation.html:15
+msgid "Yes"
+msgstr "Tak"
+
+#: password_manager/templates/delete_confirmation.html:18
+msgid "No"
+msgstr "Nie"
+
+#: password_manager/templates/profile-edit.html:30
+msgid "Danger zone"
+msgstr "Strefa niebezpieczna"
+
+#: password_manager/templates/profile-edit.html:36
+msgid "Remove account"
+msgstr "Usuń konto"
+
+#: password_manager/templates/profile-edit.html:24
+msgid "Change Master Password"
+msgstr "Zmień hasło główne"
+
+msgid "Password entry edited successfully. "
+msgstr "Edycja wpisu zakończyła się sukcesem"
+
 #: zpr/settings.py:142
 msgid "English"
 msgstr "Angielski"

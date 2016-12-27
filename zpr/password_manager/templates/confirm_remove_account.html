@@ -7,18 +7,18 @@
 
 {% block content %}
 
-<form action="" method="post" class="form">
+<form action="" method="post" class="form" >
     {% csrf_token %}
     <h2>{% trans 'Are you sure you want to remove your account ?' %}</h2>
     <h3>{% trans 'If so, confirm deletion by typing in your account password' %}</h3>
     {% bootstrap_form form %}
     {% buttons %}
         <button type="submit" class="btn btn-warning" value="yes" name="answer">
-        {% bootstrap_icon "ok" %} Delete
+        {% bootstrap_icon "ok" %} {% trans 'Delete' %}
         </button>
         <button class="btn btn-danger" onclick='location.href="/me/edit/"'>
                 {% bootstrap_icon "remove" %}
-                Cancel
+                {% trans 'Cancel' %}
         </button>
     {% endbuttons %}
 </form>
