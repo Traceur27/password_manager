@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from zpr import settings
 
 urlpatterns = [
-        url(r'^admin/', admin.site.urls),
-        url(r'^', include('password_manager.urls')),
-        url(r'^i18n/', include('django.conf.urls.i18n')),
-        ] + static(settings.STATIC_URL)
+    url(r'^admin/', admin.site.urls),
+    url(r'^', include('password_manager.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+] + static(settings.STATIC_URL)

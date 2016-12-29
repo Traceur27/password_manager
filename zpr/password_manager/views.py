@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, update_session_auth_hash
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, \
+    PasswordChangeForm
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from .forms import PasswordEntryForm
@@ -9,6 +10,7 @@ from .forms import UpdateProfileForm
 from .forms import RemoveAccountForm
 from .forms import UpdateAlgorithmForm
 from .models import PasswordEntry, UserExtension
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import logout
 from django.db.models import Q
@@ -19,10 +21,11 @@ from django.db.models import Q
 @login_required
 def index(request):
     query = Q(user=request.user)
-    filter_query = request.GET.get('filter','')
-    query=None
+    filter_query = request.GET.get('filter', '')
+    query = None
     if filter_query:
-        query = Q(name__icontains=filter_query) | Q(username__icontains=filter_query)
+        query = Q(name__icontains=filter_query) | Q(
+            username__icontains=filter_query)
         password_list = PasswordEntry.objects.filter(query, user=request.user)
     else:
         password_list = PasswordEntry.objects.filter(user=request.user)
@@ -38,7 +41,8 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         passwords = paginator.page(paginator.num_pages)
 
-    return render(request, "list.html", {"list": passwords, "query": filter_query})
+    return render(request, "list.html", {"list": passwords,
+                                         "query": filter_query})
 
 
 def do_login(request):
@@ -91,7 +95,7 @@ def edit_password(request, id=None):
 def delete_password(request, id=None):
     if request.method == 'GET':
         instance = get_object_or_404(PasswordEntry, id=id, user=request.user)
-        context = {"id": id, "name": instance.name }
+        context = {"id": id, "name": instance.name}
         return render(request, "delete_confirmation.html", context)
 
     if request.method == 'POST' and request.POST.get('answer', '') == "yes":
@@ -112,9 +116,10 @@ def profile(request):
 @login_required
 def edit_profile(request):
     update_profile_form = UpdateProfileForm(request.POST or None,
-            instance=request.user)
+                                            instance=request.user)
+    user_extension = UserExtension.objects.get(user=request.user)
     change_algorithm_form = UpdateAlgorithmForm(request.POST or None,
-            instance=UserExtension.objects.get(user=request.user))
+                                                instance=user_extension)
     if request.method == "POST":
         if update_profile_form.is_valid():
             update_profile_form.save()
@@ -123,9 +128,10 @@ def edit_profile(request):
                 instance.save(master=request.session['master'])
             messages.success(request, "Profile saved successfully")
             return redirect(reverse('profile'))
-    return render(request, "profile-edit.html", {"pform": update_profile_form,
-        "aform": change_algorithm_form})
-
+    return render(request,
+                  "profile-edit.html",
+                  {"pform": update_profile_form,
+                   "aform": change_algorithm_form})
 
 
 @login_required
@@ -153,6 +159,5 @@ def remove_account(request):
         form.save()
         return redirect(reverse('login'))
     return render(request,
-            "confirm_remove_account.html",
-            {"form": form})
-
+                  "confirm_remove_account.html",
+                  {"form": form})
