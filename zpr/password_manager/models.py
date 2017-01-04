@@ -105,14 +105,13 @@ class UserExtension(models.Model):
             * *master* - główne hasło szyfrujące hasła użytkownika
         """
         # usuwamy argument bo klasa bazowa nie spodziewa się go w kwargs
-        try:
-            master_password = kwargs.pop('master')
-        except KeyError:
-            raise ValueError(
-                "Cant rehash passwords if argument 'master' is missing")
+        master_password = kwargs.pop('master', None)
         # sprawdzamy czy obiekt się zmienił aby niepotrzebnie nie przeliczać
         # nowych zaszyfrowanych haseł zawsze gdy zapisujemy
         if self.algorithm_changed():
+            if not master_password:
+                raise ValueError(
+                    "Cant rehash passwords if argument 'master' is missing")
             # zachowaj kopię starych haseł zaszyfrowanych poprzednim algorytmem
             old_passwords = PasswordEntry.objects.filter(user=self.user)
             for p in old_passwords:

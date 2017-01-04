@@ -1,12 +1,19 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-import pytest
 
 # Create your tests here.
 from password_manager.models import PasswordEntry
 
 
 class QuestionMethodTests(TestCase):
+
+    def get_logged_in_client(self):
+        # utwórz i zaloguj urzytkownika
+        c = Client()
+        User.objects.create_user(username='test', password='test')
+        data = {"username": "test", "password": "test"}
+        c.post('/login/', data)
+        return c
 
     def test_was_published_recently_with_future_question(self):
         self.assertIs(False, False)
@@ -31,12 +38,9 @@ class QuestionMethodTests(TestCase):
         assert response.status_code == 302
 
     def test_user_can_add_password(self):
-        User.objects.create_user(username='test', password='test')
-        assert self.client.login(username='test', password='test') == True
-        p = PasswordEntry(name="bob", password="bob1", username="kowalsky")
-        p.save()
+        c = self.get_logged_in_client()
+        # utwórz obiekt w bazie danych
         data = {"name": "asd", "username": "asd1", "password": "asdPass"}
-        c = Client()
         response = c.post('/add-password/', data)
         passwords = PasswordEntry.objects.all()
         self.assertEqual(len(passwords), 1)
@@ -66,7 +70,6 @@ class QuestionMethodTests(TestCase):
         assert response.status_code != 403
         assert response.content != ""
 
-    @pytest.mark.django_db
     def test_user_can_register(self):
         c = Client()
         data = {'username': 'bob',
@@ -78,7 +81,6 @@ class QuestionMethodTests(TestCase):
         user = User.objects.get(id=1)
         assert user.username == 'bob'
 
-    @pytest.mark.django_db
     def test_user_can_login(self):
         User.objects.create_user(username='test', password='test')
         c = Client()
@@ -86,7 +88,6 @@ class QuestionMethodTests(TestCase):
         response = c.get("/")
         assert response.status_code == 200
 
-    @pytest.mark.django_db
     def test_user_cant_login_if_not_have_account(self):
         c = Client()
         assert c.login(username = 'test', password = 'test') == False
