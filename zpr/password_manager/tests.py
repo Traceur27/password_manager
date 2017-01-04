@@ -33,7 +33,7 @@ class PasswordManagerTests(TestCase):
         response = c.get('/add-password/')
         self.assertEquals(response.status_code, 302)
         response = c.get('/edit-password/1')
-        self.assertEquals(response.status_code, 301)
+        self.assertEquals(response.status_code, 302)
         response = c.get('/delete-password/1')
         self.assertEquals(response.status_code, 302)
 
@@ -45,6 +45,17 @@ class PasswordManagerTests(TestCase):
         passwords = PasswordEntry.objects.all()
         self.assertEqual(len(passwords), 1)
         self.assertEquals(response.status_code, 302)
+
+    def test_user_can_edit_password(self):
+        c = self.get_logged_in_client()
+        us = User.objects.get(id=1)
+        psw = PasswordEntry(user=us, name='test1', username='us', password='pass123')
+        psw.save(master='test')
+        data = {"name":"test1", "username":"us", "password":"new_pass"}
+        response = c.post('/edit-password/' + psw.id.__str__(), data)
+        self.assertEquals(response.status_code, 302)
+        psw = PasswordEntry.objects.get(id=1)
+        self.assertEquals(psw.decrypt('test'), b'new_pass')
 
     def test_user_can_delete_password(self):
         c = self.get_logged_in_client()
