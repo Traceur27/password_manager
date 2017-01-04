@@ -81,3 +81,9 @@ Automatic tests are handled by pytest
 cd zpr
 pytest
 ```
+
+Second approach using unittest:
+```bash
+./manage.py test password_manager
+```
+
