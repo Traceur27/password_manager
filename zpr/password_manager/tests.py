@@ -68,6 +68,26 @@ class PasswordManagerTests(TestCase):
         response = c.get('/delete-password/' + psw.id.__str__())
         self.assertEquals(response.status_code, 404)
 
+    def user_can_list_passwords(self):
+        c = self.get_logged_in_client()
+        us = User.objects.get(id=1)
+        psw = PasswordEntry(user=us, name='test1', username='us', password='pass123')
+        psw.save(master='test')
+        response = c.get("/")
+        self.assertEquals(response.status_code, 200)
+
+    def user_can_change_password(self):
+        c = self.get_logged_in_client()
+        us = User.objects.get(id=1)
+        psw = PasswordEntry(user=us, name='test1', username='us', password='pass123')
+        psw.save(master='test')
+        data = {'old_password': 'test',
+                'new_password1': 'test2',
+                'new_password2': 'test2'
+                }
+        response = c.post('/me/change-password/', data)
+        self.assertEquals(response.status_code, 302)
+
     def test_user_can_logout(self):
         User.objects.create_user(username='test', password='test')
         self.assertEquals(self.client.login(username='test', password='test'), True)
@@ -115,11 +135,15 @@ class PasswordManagerTests(TestCase):
                 {'username': "test",
             "email": "user@example.com",
             "first_name": "test",
-            "last_name": "test"})
+            "last_name": "test",
+            "encryption_algorithm": "plain"})
         user = User.objects.get(id=1)
         self.assertEqual(user.username, "test")
         self.assertEqual(user.email, "user@example.com")
         self.assertEqual(user.first_name, "test")
+        self.assertEqual(user.first_name, "test")
+        user_extension = UserExtension.objects.get(user=user)
+        self.assertEqual(user_extension.encryption_algorithm, "plain")
         self.assertEqual(response.status_code, 302)
 
     def test_user_can_remove_account(self):
