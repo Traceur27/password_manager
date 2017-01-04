@@ -47,7 +47,7 @@ class PasswordEntry(models.Model):
         tej metody
         """
         algorithm = UserExtension.objects.get(
-                user=self.user).encryption_algorithm
+            user=self.user).encryption_algorithm
 
         encryptor = pmutil.get_crypto_object(algorithm, master_password)
         self.password = encryptor.encrypt(self.password)
@@ -57,7 +57,7 @@ class PasswordEntry(models.Model):
         Odszyfrowuje pole password i zwraca hasło w postaci jawnej
         """
         algorithm = UserExtension.objects.get(
-                user=self.user).encryption_algorithm
+            user=self.user).encryption_algorithm
 
         encryptor = pmutil.get_crypto_object(algorithm, master_password)
 
@@ -85,8 +85,8 @@ class UserExtension(models.Model):
     user = models.OneToOneField(User)
     ALGORITHMS = pmutil.get_all_algorithms_choices()
     encryption_algorithm = models.CharField(
-            _("Algorithm"),
-            max_length=50, choices=ALGORITHMS, default='xor')
+        _("Algorithm"),
+        max_length=50, choices=ALGORITHMS, default='xor')
 
     def algorithm_changed(self):
         """
@@ -104,17 +104,17 @@ class UserExtension(models.Model):
         :Keyword Arguments:
             * *master* - główne hasło szyfrujące hasła użytkownika
         """
+        # usuwamy argument bo klasa bazowa nie spodziewa się go w kwargs
+        try:
+            master_password = kwargs.pop('master')
+        except KeyError:
+            raise ValueError(
+                "Cant rehash passwords if argument 'master' is missing")
         # sprawdzamy czy obiekt się zmienił aby niepotrzebnie nie przeliczać
         # nowych zaszyfrowanych haseł zawsze gdy zapisujemy
         if self.algorithm_changed():
-            # usuwamy argument bo klasa bazowa nie spodziewa się go w kwargs
-            try:
-                master_password = kwargs.pop('master')
-            except KeyError:
-                raise ValueError(
-                    "Cant rehash passwords if keyword argument 'master' is missing")
             # zachowaj kopię starych haseł zaszyfrowanych poprzednim algorytmem
-            old_passwords = PasswordEntry.objects.all()
+            old_passwords = PasswordEntry.objects.filter(user=self.user)
             for p in old_passwords:
                 # odszyfruj je
                 p.decrypt_in_place(master_password)
