@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-16 20:57+0000\n"
-"PO-Revision-Date: 2016-12-16 21:59+0100\n"
+"POT-Creation-Date: 2017-01-04 21:46+0000\n"
+"PO-Revision-Date: 2017-01-04 22:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -24,8 +24,8 @@ msgstr ""
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
-#: password_manager/forms.py:11 password_manager/models.py:27
-#: password_manager/templates/list.html:37
+#: password_manager/forms.py:11 password_manager/forms.py:42
+#: password_manager/models.py:27 password_manager/templates/list.html:37
 msgid "Password"
 msgstr "Hasło"
 
@@ -33,16 +33,24 @@ msgstr "Hasło"
 msgid "Name"
 msgstr "Nazwa"
 
-#: password_manager/models.py:86
+#: password_manager/models.py:88
 msgid "Algorithm"
 msgstr "Algorytm"
 
 #: password_manager/templates/add_password.html:9
+#: password_manager/templates/list.html:13
+msgid "Add Password"
+msgstr "Dodaj hasło"
+
 #: password_manager/templates/add_password.html:16
 msgid "Add password"
 msgstr "Dodaj hasło"
 
 #: password_manager/templates/add_password.html:20
+#: password_manager/templates/confirm_remove_account.html:21
+#: password_manager/templates/edit_password.html:20
+#: password_manager/templates/profile-edit.html:18
+#: password_manager/templates/registration/password_change_form.html:17
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -55,9 +63,29 @@ msgid "If so, confirm deletion by typing in your account password"
 msgstr ""
 "Jeśli tak, to potwierdź usunięcie poprzez wpisanie swojego hasła do konta"
 
-#: password_manager/templates/list.html:13
-msgid "Add Password"
-msgstr "Dodaj hasło"
+#: password_manager/templates/confirm_remove_account.html:17
+msgid "Delete"
+msgstr "Usuń"
+
+#: password_manager/templates/delete_confirmation.html:12
+msgid "Are you sure you want to remove password for "
+msgstr "Jesteś pewny, że chcesz usunąć hasło "
+
+#: password_manager/templates/delete_confirmation.html:15
+msgid "Yes"
+msgstr "Tak"
+
+#: password_manager/templates/delete_confirmation.html:18
+msgid "No"
+msgstr "Nie"
+
+#: password_manager/templates/edit_password.html:9
+msgid "Edit Password"
+msgstr "Edytuj Hasło"
+
+#: password_manager/templates/edit_password.html:16
+msgid "Edit"
+msgstr "Edytuj"
 
 #: password_manager/templates/list.html:18
 #: password_manager/templates/list.html:23
@@ -117,6 +145,23 @@ msgstr "Profil"
 msgid "Logout"
 msgstr "Wyloguj"
 
+#: password_manager/templates/profile-edit.html:14
+#: password_manager/templates/registration/password_change_form.html:13
+msgid "OK"
+msgstr "OK"
+
+#: password_manager/templates/profile-edit.html:24
+msgid "Change Master Password"
+msgstr "Zmień hasło główne"
+
+#: password_manager/templates/profile-edit.html:30
+msgid "Danger zone"
+msgstr "Strefa niebezpieczna"
+
+#: password_manager/templates/profile-edit.html:36
+msgid "Remove account"
+msgstr "Usuń konto"
+
 #: password_manager/templates/profile.html:29
 msgid "You have"
 msgstr "Masz"
@@ -137,14 +182,6 @@ msgstr "w bazie"
 msgid "Edit profile"
 msgstr "Edytuj profil"
 
-#: password_manager/templates/registration/login.html:20
-msgid "Don't have account yet ?"
-msgstr "Nie masz jeszcze konta ?"
-
-#: password_manager/templates/registration/login.html:23
-msgid "Create Account"
-msgstr "Utwórz nowe konto"
-
 #: password_manager/templates/registration/logged_out.html:10
 msgid "Logout successful"
 msgstr "Zostałeś poprawnie wylogowany"
@@ -157,40 +194,33 @@ msgstr "Dziękujemy za skorzystanie z naszych usług"
 msgid "Login again"
 msgstr "Zaloguj się ponownie"
 
-#: password_manager/templates/edit_password.html:8
-msgid "Edit site and password"
-msgstr "Edycja strony i hasła"
+#: password_manager/templates/registration/login.html:20
+msgid "Don't have account yet ?"
+msgstr "Nie masz jeszcze konta ?"
 
-#: password_manager/templates/edit_password.html:16
-msgid "Edit"
-msgstr "Edytuj"
+#: password_manager/templates/registration/login.html:23
+msgid "Create Account"
+msgstr "Utwórz nowe konto"
 
-#: password_manager/templates/delete_confirmation.html:12
-msgid "Are you sure you want to remove password for "
-msgstr "Jesteś pewny, że chcesz usunąć hasło dla strony "
+#: password_manager/views.py:75
+msgid "Password added successfully."
+msgstr "Pomyślnie dodano nowe hasło"
 
-#: password_manager/templates/delete_confirmation.html:15
-msgid "Yes"
-msgstr "Tak"
+#: password_manager/views.py:89
+msgid "Password entry edited successfully."
+msgstr "Edycja hasła zakończona sukcesem"
 
-#: password_manager/templates/delete_confirmation.html:18
-msgid "No"
-msgstr "Nie"
+#: password_manager/views.py:106
+msgid "Password entry deleted"
+msgstr "Hasło zostało usunięte"
 
-#: password_manager/templates/profile-edit.html:30
-msgid "Danger zone"
-msgstr "Strefa niebezpieczna"
+#: password_manager/views.py:131
+msgid "Profile saved successfully"
+msgstr "Pomyślnie zapisano zmiany w profilu"
 
-#: password_manager/templates/profile-edit.html:36
-msgid "Remove account"
-msgstr "Usuń konto"
-
-#: password_manager/templates/profile-edit.html:24
-msgid "Change Master Password"
-msgstr "Zmień hasło główne"
-
-msgid "Password entry edited successfully. "
-msgstr "Edycja wpisu zakończyła się sukcesem"
+#: password_manager/views.py:150
+msgid "Master password change successfully"
+msgstr "Pomyślnie zmieniono hasło główne"
 
 #: zpr/settings.py:142
 msgid "English"
@@ -199,6 +229,9 @@ msgstr "Angielski"
 #: zpr/settings.py:143
 msgid "Polish"
 msgstr "Polski"
+
+#~ msgid "Edit site and password"
+#~ msgstr "Edycja strony i hasła"
 
 #~ msgid ""
 #~ "\n"

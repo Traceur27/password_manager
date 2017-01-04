@@ -15,6 +15,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import logout
 from django.db.models import Q
 
+from django.utils.translation import ugettext as _
+
 
 # Create your views here.
 
@@ -70,7 +72,7 @@ def add_password_entry(request):
         instance = form.save(commit=False)
         instance.user = request.user
         instance.save(master=request.session['master'])
-        messages.success(request, 'Password added successfully.')
+        messages.success(request, _('Password added successfully.'))
         return redirect(reverse('index'))
 
     context = {"form": form}
@@ -84,7 +86,7 @@ def edit_password(request, id=None):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save(master=request.session['master'])
-        messages.success(request, 'Password entry edited successfully.')
+        messages.success(request, _('Password entry edited successfully.'))
         return redirect(reverse("index"))
 
     context = {"form": form, "id": id}
@@ -101,7 +103,7 @@ def delete_password(request, id=None):
     if request.method == 'POST' and request.POST.get('answer', '') == "yes":
         instance = get_object_or_404(PasswordEntry, id=id, user=request.user)
         instance.delete()
-        messages.success(request, "Password entry deleted")
+        messages.success(request, _("Password entry deleted"))
 
     return redirect(reverse("index"))
 
@@ -126,7 +128,7 @@ def edit_profile(request):
             if change_algorithm_form.is_valid():
                 instance = change_algorithm_form.save(commit=False)
                 instance.save(master=request.session['master'])
-            messages.success(request, "Profile saved successfully")
+            messages.success(request, _("Profile saved successfully"))
             return redirect(reverse('profile'))
     return render(request,
                   "profile-edit.html",
@@ -145,7 +147,7 @@ def password_change(request):
             p.rehash(form.cleaned_data.get('old_password'),
                      form.cleaned_data.get('new_password1'))
         request.session['master'] = form.cleaned_data.get('new_password1')
-        messages.success(request, "Master password change successfully")
+        messages.success(request, _("Master password change successfully"))
         return redirect(reverse('profile'))
     return render(request, "registration/password_change_form.html",
                   {"form": form})
