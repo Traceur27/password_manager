@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 
 # Create your tests here.
-from password_manager.models import PasswordEntry
+from password_manager.models import PasswordEntry, UserExtension
 
 
 class PasswordManagerTests(TestCase):
@@ -92,3 +92,30 @@ class PasswordManagerTests(TestCase):
     def test_user_cant_login_if_not_have_account(self):
         c = Client()
         self.assertEquals(c.login(username = 'test', password = 'test'), False)
+
+    def test_logged_in_user_can_disply_profile(self):
+        c = self.get_logged_in_client()
+        response = c.get('/me/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_logged_in_user_can_edit_profile(self):
+        c = self.get_logged_in_client()
+        response = c.post('/me/edit/',
+                {'username': "test",
+            "email": "user@example.com",
+            "first_name": "test",
+            "last_name": "test"})
+        user = User.objects.get(id=1)
+        self.assertEqual(user.username, "test")
+        self.assertEqual(user.email, "user@example.com")
+        self.assertEqual(user.first_name, "test")
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_can_remove_account(self):
+        c = self.get_logged_in_client()
+
+        c.post('/me/remove/', {"password": "test"})
+        self.assertEqual(len(User.objects.all()), 0)
+        self.assertEqual(len(UserExtension.objects.all()), 0)
+
+
