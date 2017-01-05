@@ -76,13 +76,8 @@ Username: admin
 Password: admin123
 
 ## Testing
-Automatic tests are handled by pytest
-```bash
-cd zpr
-pytest
-```
+Automatic tests are handled by unittest
 
-Second approach using unittest:
 ```bash
 ./manage.py test password_manager
 ```
