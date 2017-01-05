@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your tests here.
 from password_manager.models import PasswordEntry, UserExtension
+from password_manager.util import get_crypto_object
 
 
 class PasswordManagerTests(TestCase):
@@ -14,9 +15,6 @@ class PasswordManagerTests(TestCase):
         data = {"username": "test", "password": "test"}
         c.post('/login/', data)
         return c
-
-    def test_was_published_recently_with_future_question(self):
-        self.assertIs(False, False)
 
     def test_not_logged_in_user_cant_open_restricted_access_pages(self):
         c = Client()
@@ -61,14 +59,14 @@ class PasswordManagerTests(TestCase):
         response = c.post('/edit-password/' + psw.id.__str__(), data)
         self.assertEquals(response.status_code, 200)
         psw = PasswordEntry.objects.get(id=1)
-        self.assertEquals(psw.decrypt('test'), b'pass123')
+        self.assertEquals(psw.decrypt('test'), 'pass123')
 
 
         data = {"name":"test1", "username":"us", "password":"new_pass"}
         response = c.post('/edit-password/' + psw.id.__str__(), data)
         self.assertEquals(response.status_code, 302)
         psw = PasswordEntry.objects.get(id=1)
-        self.assertEquals(psw.decrypt('test'), b'new_pass')
+        self.assertEquals(psw.decrypt('test'), 'new_pass')
 
     def test_user_can_delete_password(self):
         c = self.get_logged_in_client()
@@ -194,3 +192,28 @@ class PasswordManagerTests(TestCase):
         response = c.post('/me/remove/', {"password": "test"})
         self.assertEqual(len(User.objects.all()), 0)
         self.assertEqual(len(UserExtension.objects.all()), 0)
+
+class CryptoCppTests(TestCase):
+    def test_plain(self):
+        plain = get_crypto_object('plain', 'secret')
+        message = "Test"
+        encrypted_message = plain.encrypt(message)
+        self.assertEquals(encrypted_message, 'VGVzdA==')
+        decrypted_mesage = plain.decrypt(encrypted_message)
+        self.assertEquals(message, decrypted_mesage)
+
+    def test_xor(self):
+        plain = get_crypto_object('xor', 'secret')
+        message = "Test"
+        encrypted_message = plain.encrypt(message)
+        self.assertEquals(encrypted_message, 'JwAQBg==')
+        decrypted_mesage = plain.decrypt(encrypted_message)
+        self.assertEquals(message, decrypted_mesage)
+
+    def test_rc4(self):
+        plain = get_crypto_object('rc4', 'secret')
+        message = "Test"
+        encrypted_message = plain.encrypt(message)
+        self.assertEquals(encrypted_message, 'uVOhaA==')
+        decrypted_mesage = plain.decrypt(encrypted_message)
+        self.assertEquals(message, decrypted_mesage)

@@ -26,8 +26,8 @@ class EncryptorMixIn:
         """
         base64 encrypted data -> str plain data
         """
-        return base64.b64decode(
-            self.doDecrypt(base64.b64decode(data), self.key))
+        data = base64.b64decode(self.doDecrypt(base64.b64decode(data), self.key))
+        return data.decode()
 
 
 AlgorithmDescription = namedtuple("AlgorithmDescription", [

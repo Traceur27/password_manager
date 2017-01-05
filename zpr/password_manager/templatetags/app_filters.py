@@ -10,4 +10,4 @@ register = template.Library()
 @register.simple_tag
 def hidePassword(encryptedPassword, masterPassword):
     pw_plain = encryptedPassword.decrypt(masterPassword)
-    return base64.b64encode(pw_plain)
+    return base64.b64encode(pw_plain.encode())
