@@ -7,9 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 import password_manager.util as pmutil
 
 
-# Create your models here.
-
-
 class PasswordEntry(models.Model):
     """
     Klasa opisuje rekord zapamiętanego hasła
