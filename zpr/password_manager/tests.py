@@ -32,7 +32,7 @@ class PasswordManagerTests(TestCase):
         c = Client()
         User.objects.create_user(username='test', password='test')
         data = {"username": "test", "password": "test"}
-        c.post('/login/', data)
+        c.post(LOGIN_URL, data)
         return c
 
     def test_not_logged_in_user_cant_open_restricted_access_pages(self):
