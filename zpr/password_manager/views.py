@@ -17,7 +17,6 @@ from django.db.models import Q
 
 from django.utils.translation import ugettext as _
 
-
 # Create your views here.
 
 @login_required

@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<form action="/delete-password/{{id}}" method="post" class="form">
+<form action="/delete-password/{{id}}/" method="post" class="form">
     {% csrf_token %}
     <h2>{% trans 'Are you sure you want to remove password for ' %}<b>{{ name }}</b>?</h2>
     {% buttons %}
